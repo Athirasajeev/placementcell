@@ -4,13 +4,44 @@
     Author     : student6
 --%>
 
-<%@include file="Companyheader.jsp" %>
+<%@include file="companyheader.jsp" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+     <script>
+            
+            function validate()
+            {
+                var status="true";
+                
+                var regtype=/^[a-zA-Z]{4,20}$/;
+                var type=document.getElementById('jobtype_name').value;
+               
+                if((type.match(regtype)))
+                {
+                    document.getElementById("valtype").innerHTML=""
+                }else
+                { alert(type);
+                    document.getElementById("valtype").innerHTML="Invalid Data";
+                    status="false";
+                }
+                
+                if(status=="false")
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+                
+            }
+            
+            </script>
+        
     </head>
     <body>
         <form class="">
@@ -42,8 +73,8 @@
                 }
                 %>
             <table class="table table-bordered">
-                <tr><td colspan="2"><h1 style="font-family:sans-serif ">jobtype Details</h1></td></tr>
-        <tr><td>JOB Name:</td><td><input type="text" value="<%=jobtype_name%>" required="" name="jobtype_name" id="jobtype_name" ><div style="color: red" id="valdept"></div></td></tr><br>
+                <tr><td colspan="2"><h1 style="font-family:serif "> <center>Job Type Details</center></h1></td></tr>
+        <tr><td style="font-family: initial">JOB Name :</td><td><input type="text" value="<%=jobtype_name%>" required="" name="jobtype_name" id="jobtype_name" ><div style="color: red" id="valtype"></div></td></tr><br>
                 <tr><td><input class="btn btn-block" type="submit" name="sub" value="SAVE" onclick="return validate()"></td>
                     <td><input class="btn btn-block" type="reset" name="cancel" value="CANCEL"></td></tr><br>
                 <input type="hidden" value="<%=editid%>" name="hid" id="name">
@@ -72,8 +103,8 @@
                }
                %>
                 <table class="table table-bordered">
-                    <tr><td colspan="2"><h2 style="font-family: sans-serif "><center>jobtype Details</center></h2></td>
-                    <tr><td style="font-family: sans-serif"><center> job Name</center></td><td></td></tr>
+                    <tr><td colspan="2"><h2 style="font-family:serif "><center> job Type Details </center></h2></td>
+                    <tr><td> job Name</td><td></td></tr>
                    <%
                        String dis= "select * from tbl_jobtype";
                        ResultSet rs=obj.Select(dis);
@@ -89,3 +120,5 @@
         </form>
     </body>
 </html>
+<%@include file="companyfooter.jsp" %>
+
