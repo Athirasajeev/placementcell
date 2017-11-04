@@ -81,7 +81,7 @@
             }
             }
                 %>
-                <table class="table table-bordered">
+                <table class="table ">
                     <tr><td colspan="2"><center><h1 style="font-family: sans-serif">Batch Details</h1></center></td></tr>
         <tr><td>Batch Name:</td><td><input  class="text text-info" type="text" value="<%=batch_name%>" required="" name="batch_name" id="batch_name"><div style="color: red" id="valbatch"></div></td></tr><br>
          <tr><td>Batch From:</td><td><input type="date" value="<%=batch_from%>" required="" name="batch_from" id="batch_from"></td></tr><br>

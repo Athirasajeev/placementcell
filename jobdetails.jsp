@@ -34,7 +34,7 @@
             <form name="jobdetails">
             <%
                 
-                String job_name="",jobtype_id="",company_id="",job_basicsalary="",job_novaccancy="";
+                String job_name="",jobtype_id="",company_id="",job_basicsalary="",job_novaccancy="",job_lastdate="";
                 String editid="";
                 if(request.getParameter("eid")!=null)
                 {
@@ -48,6 +48,7 @@
                         company_id=rs.getString("company_id");
                         job_basicsalary=rs.getString("job_basicsalary");
                         job_novaccancy=rs.getString("job_novaccancy");
+                        job_lastdate=rs.getString("job_lastdate");
                     }
                 }
                 
@@ -73,6 +74,8 @@
                        job_name=request.getParameter("job_name");
                        job_basicsalary=request.getParameter("job_basicsalary");
                        job_novaccancy=request.getParameter("job_novaccancy");
+                       job_lastdate=request.getParameter("job_lastdate");
+                       
                        if(request.getParameter("hid")!="")
                          
                         {
@@ -88,9 +91,15 @@
                     
                          else
                    {
-                        String ins="insert into tbl_jobdetails(job_name,jobtype_id,job_basicsalary,job_novaccancy,company_id)values('"+job_name+"','"+jobtype_id+"','"+job_basicsalary+"','"+job_novaccancy+"','"+company_id+"')";
-                        Boolean b=obj.insert(ins);
-                        out.println(b);
+                        String ins="insert into tbl_jobdetails(job_name,jobtype_id,job_basicsalary,job_novaccancy,job_lastdate,company_id)values('"+job_name+"','"+jobtype_id+"','"+job_basicsalary+"','"+job_novaccancy+"','"+job_lastdate+"','"+session.getAttribute("cid")+"')";
+                        boolean b=obj.insert(ins);
+                        if(b)
+                        {String sel="select MAX(job_id) as job_id from tbl_jobdetails where company_id='"+session.getAttribute("cid")+"'";
+                            ResultSet rs=obj.Select(sel);
+                        if(rs.next())
+                        response.sendRedirect("jobcriteria.jsp?job_name="+rs.getString("job_id"));
+                        }
+                        out.println(ins);
                     }}
                     
                     %>
@@ -111,21 +120,9 @@
 
 %>
 <tr><td>Basic Salary:</td><td><input type="number" value="<%=job_basicsalary%>"  required=" "name="job_basicsalary"></td></tr><br>
-<tr><td>No: of vaccancies:</td><td><input type="number" value="<%=job_novaccancy%>" required="" name="job_novaccancy"></td></tr><br>
-<tr><td>Company Name:</td><td><select name="company_name" id="sel2">
-                                    
-                                    <option value="select">select</option>
-                                    <%
-                                        String sel2="select * from tbl_company";
-                                        ResultSet rs3=obj.Select(sel2);
-                                        while(rs3.next())
-                                        {%>
-                                        <option value="<%=rs3.getString("company_id")%>" <% if(company_id.equals(rs3.getString("company_id"))){%> selected=" " <%} %>><%=rs3.getString("company_name")%></option>
-                                        <% }
-
-                                        %></select>
-<tr><td><input class="btn btn-block" type="submit" name="sub" value="SAVE"></td>
-   <td><input class="btn-block"  type="reset" name="cancel" value="CANCEL"></td></tr>
+<tr><td>No of Vaccancies:</td><td><input type="number" value="<%=job_novaccancy%>" required="" name="job_novaccancy"></td></tr><br>
+<tr><td>Application Last Date:</td><td><input type="date" value="<%=job_lastdate%>" required="" name="job_lastdate"></td></tr><br>
+<tr><td></td><td><input class="btn btn-success" type="submit" name="sub" value="SAVE"><input class="btn btn-danger"  type="reset" name="cancel" value="CANCEL"></td></tr>
            <input type="hidden" name="hid" value="<%=editid%>">                        
                                 </select>
                     </table>
@@ -142,11 +139,14 @@
                            
     %>
                        
-                       <td><%=rs4.getString("job_name")%></td><td><a href="jobdetails.jsp?eid=<%=rs4.getString("job_id")%>">Edit</a><a href="jobdetails.jsp?did=<%=rs4.getString("job_id")%>">Delete</a></td></tr>
+                       <td><%=rs4.getString("job_name")%>
                        <tr><td><%=rs4.getString("Jobtype_name")%></td>
-                       <td><%=rs4.getString("job_basicsalary")%></td><td><a href="jobdetails.jsp?eid=<%=rs4.getString("job_id")%>">Edit</a><a href="jobdetails.jsp?did=<%=rs4.getString("job_id")%>">Delete</a></td></tr>    
-                       <td><%=rs4.getString("job_novaccancy")%></td><td><a href="jobdetails.jsp?eid=<%=rs4.getString("job_id")%>">Edit</a><a href="jobdetails.jsp?did=<%=rs4.getString("job_id")%>">Delete</a></td></tr>
-                       <tr><td><%=rs4.getString("company_name")%></td>
+                       <td><%=rs4.getString("job_basicsalary")%>
+                       <td><%=rs4.getString("job_novaccancy")%></td>
+                       <tr><td><%=rs4.getString("job_lastdate")%></td>
+                           <tr><td><%=rs4.getString("company_name")%></td>
+                       <td><a href="jobdetails.jsp?eid=<%=rs4.getString("job_id")%>">Edit</a><a href="jobdetails.jsp?did=<%=rs4.getString("job_id")%>">Delete</a></td></tr>
+                       
                   <% }  %>  
                   
                   </table>

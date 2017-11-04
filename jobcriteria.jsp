@@ -15,6 +15,7 @@
     <body>
        
             <%
+                String jid=request.getParameter("job_name");
                 String criteria_10mark="",criteria_12mark="",criteria_degreemark="",job_id="";
                 String editid="";
                 if(request.getParameter("eid")!=null)
@@ -58,7 +59,7 @@
                                         ResultSet rs=obj.Select(sel);
                                         while(rs.next())
                                         {%>
-                                        <option value="<%=rs.getString("job_id")%>" <% if(job_id.equals(rs.getString("job_id"))){%> selected=" " <%} %>><%=rs.getString("job_name")%>
+                                        <option value="<%=rs.getString("job_id")%>" <% if(jid.equals(rs.getString("job_id"))){%> selected=" " <%} %>><%=rs.getString("job_name")%>
                                         <% }
 
 %></select>
@@ -89,10 +90,15 @@
                          else
                    {
                    String ins="insert into tbl_jobcriteria(criteria_10mark,criteria_12mark,criteria_degreemark,job_id)values('"+criteria_10mark+"','"+criteria_12mark+"','"+criteria_degreemark+"','"+job_id+"')";
-                   Boolean b=obj.insert(ins);
-                   out.println(b);
-                 }
-               }
+                   boolean b=obj.insert(ins);
+                String sel1="select MAX(job_id) as job_id from tbl_jobdetails where company_id='"+session.getAttribute("cid")+"'";
+                            ResultSet rs1=obj.Select(sel1);
+                        if(rs1.next())
+                        response.sendRedirect("exam.jsp?job_id="+rs1.getString("job_id"));
+                      }}
+                    
+                     
+                  
                %>
                 <table class="table table-bordered">
                     <tr><td colspan="5"><h2 style="font-family: serif"><center>Job Criteria</center></h2></td>

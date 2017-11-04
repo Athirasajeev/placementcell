@@ -1,5 +1,5 @@
 
-<%@include file="Companyheader.jsp" %>
+<%@include file="companyheader.jsp" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
  <form name="option">
             <%
@@ -55,16 +55,18 @@
                              
                          }
                          else
-                   {
+                   {for(int i=0;i<4;i++){
+                       option_name=request.getParameter("option_name"+i);
+                        option_isanswer=request.getParameter("option"+i);
                         String ins="insert into tbl_option(option_name,question_id,option_isanswer)values('"+option_name+"','"+question_id+"','"+option_isanswer+"')";
-                        Boolean b=obj.insert(ins);
+                        boolean b=obj.insert(ins);
                         out.println(b);
+                   }
                     }
                     }
                     %>
                      <table>
                         <th><h2>Option Details</h2></th><br><br>
-                        <tr><td>Option Name:</td><td><input type="text" value="<%=option_name%>" name="option_name"></td></tr><br>
                         <tr><td>Question Name:</td><td><select name="question_name" id="sel">
                                     
                                     <option value="select">select</option>
@@ -77,9 +79,13 @@
                                         <% }
 
 %>
-
- <tr><td>option is:<input type="radio" name="option" value="True"> True<input type="radio" name="option" value="False"> False<br>
- 
+                                </select>
+                            </td>
+                        </tr><%for(int i=0;i<4;i++){%>
+                        <tr><td>Option <%=i%>:</td><td><input type="text" value="<%=option_name%>" name="option_name<%=i%>"></td>
+                        
+<td>option is:<input type="radio" name="option<%=i%>" value="True"> True<input type="radio" name="option<%=i%>" value="False"> False<br>
+ <%}%>
 
 <tr><td><input type="submit" name="sub" value="SAVE"><br>
          <input type="reset" name="cancel" value="CANCEL"></td></tr>
@@ -113,3 +119,4 @@
         
     </body>
 </html>
+<%@include file="companyfooter.jsp" %>

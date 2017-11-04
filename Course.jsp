@@ -11,7 +11,7 @@
             {
                 var status="true";
                 
-                var regcourse=/^[a-zA-Z]{4,9}$/;
+                var regcourse=/^[a-zA-Z]{2}$/;
                 var course=document.getElementById('course_name').value;
                
                 if((course.match(regcourse)))
@@ -19,7 +19,7 @@
                     document.getElementById("valcourse").innerHTML=""
                 }else
                 { //alert(course);
-                    document.getElementById("valcourse").innerHTML="Invalid data";
+                    document.getElementById("valcourse").innerHTML="Invalid course name";
                     status="false";
                 }
                 

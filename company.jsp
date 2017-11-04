@@ -1,4 +1,4 @@
-<%@include file="CompanyHeader.jsp" %>
+<%@include file="AdminHeader.jsp" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -54,7 +54,7 @@
                     document.getElementById("valweb").innerHTML="Invalid website";
                     status="false";
                 }
-                 var regfounders=/^[a-zA-z]{4,100}$/;
+                 var regfounders=/^[a-zA-z]{2,100}$/;
                 var founders=document.getElementById('founders').value;
                
                 if((founders.match(regfounders)))

@@ -16,7 +16,7 @@
             {
                 var status="true";
                 
-                var regdept=/^[a-zA-Z]{3,9}$/;
+                var regdept=/^[a-zA-Z]{4,9}$/;
                 var dept=document.getElementById('name').value;
                
                 if((dept.match(regdept)))
